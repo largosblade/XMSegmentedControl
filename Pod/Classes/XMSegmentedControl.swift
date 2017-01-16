@@ -60,6 +60,9 @@ open class XMSegmentedControl: UIView {
     open var delegate: XMSegmentedControlDelegate?
     fileprivate var highlightView: UIView!
     
+    
+    open var highlightViewWidthProportion: CGFloat = 1.0
+    
     /**
      Defines the height of the highlighted edge if `selectedItemHighlightStyle` is either `TopEdge` or `BottomEdge`
      - Note: Changes only take place if `selectedItemHighlightStyle` is either `TopEdge` or `BottomEdge`
@@ -373,7 +376,8 @@ open class XMSegmentedControl: UIView {
 
             let tabBarSections = segmentTitle.count
             let sectionWidth = totalWidth / CGFloat(tabBarSections)
-            addHighlightView(startingPosition: CGFloat(selectedSegment) * sectionWidth, width: sectionWidth)
+            let xOffset = (1 - highlightViewWidthProportion) / 2
+            addHighlightView(startingPosition: CGFloat(selectedSegment) * sectionWidth + sectionWidth + xOffset, width: sectionWidth)
             addSegments(startingPosition: 0, sections: tabBarSections, width: sectionWidth, height: frame.height)
         } else if contentType == .icon {
             let tabBarSections:Int = segmentIcon.count
